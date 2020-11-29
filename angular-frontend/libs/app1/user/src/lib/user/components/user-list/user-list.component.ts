@@ -119,6 +119,4 @@ export class UserListComponent implements OnInit, OnDestroy {
 // 0. API project, run concurrently
 // 1. output
 // 2. test
-// 4. Try xstate
 // 5. Try data => Normalzer => entity Adapter and entity Adapter => Normalzer => data
-// 6. Stefar review and ask Tim to reuse
