@@ -1,0 +1,83 @@
+<div *ngIf="vm$ | async as vm">
+  <section class="user-list-section">
+    State: {{ vm.currentXState.toStrings() }}
+    <ng-container *ngIf="vm.currentXState.matches('idle')">idle</ng-container>
+    <ng-container *ngIf="vm.currentXState.matches('running')"
+      >running</ng-container
+    >
+    <ng-container *ngIf="vm.currentXState.matches('paused')"
+      >paused</ng-container
+    >
+    <ng-container *ngIf="['idle', 'running'].some(vm.currentXState.matches)"
+      >idle or running</ng-container
+    >
+    <form [formGroup]="filterTextFormGroup">
+      <section class="toolbar">
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            placeholder="Please add a string to filter"
+            formControlName="filterText"
+            (ngModelChange)="onFilterTextChange($event)"
+          />
+          <mat-error
+            *ngIf="filterTextFormGroup.controls.filterText.hasError('required')"
+          >
+            Required
+          </mat-error>
+        </mat-form-field>
+
+        <label class="oddOrEven">OddOrEven:</label>
+        <mat-radio-group
+          [value]="vm.selectedOption"
+          (change)="onOptionChange($event)"
+        >
+          <mat-radio-button
+            class="radio-button"
+            *ngFor="let option of vm.options"
+            [value]="option"
+          >
+            {{ option }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </section>
+    </form>
+    <section class="users-table-container">
+      <div *ngIf="vm.usersLoading">
+        Loading
+      </div>
+      <table *ngIf="!vm.usersLoading">
+        <tr>
+          <th>
+            Id
+          </th>
+          <th>
+            Name
+          </th>
+          <th>
+            Delete
+          </th>
+        </tr>
+        <tr
+          *ngFor="
+            let user of vm.users | nameFilter: vm.filterText;
+            let i = index
+          "
+        >
+          <td>{{ user.id }}</td>
+          <td>
+            <input
+              type="text"
+              [ngModel]="user.name"
+              (ngModelChange)="onNameChange($event, user.id)"
+            />
+          </td>
+          <td>
+            <button (click)="onDeleteButtonClick(user.id)">Delete</button>
+          </td>
+        </tr>
+      </table>
+    </section>
+  </section>
+</div>

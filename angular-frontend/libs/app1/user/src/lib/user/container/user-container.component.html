@@ -1,0 +1,22 @@
+<ss-user-list
+  [users]="users$ | async"
+  [usersLoading]="usersLoading$ | async"
+  (deleteUser)="onDeleteUser($event)"
+  (nameChange)="onNameChange($event)"
+  (optionChange)="onOptionChange($event)"
+>
+</ss-user-list>
+<ss-add-user (addUser)="onAddUser($event)"></ss-add-user>
+
+<ss-paginator
+  [length]="100"
+  [pageSize]="10"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  (page)="log($event)"
+>
+</ss-paginator>
+
+<ng-container *ngIf="error$ | async">
+  <pre>{{ error$ | async | json }}</pre>
+  ></ng-container
+>
