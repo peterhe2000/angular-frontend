@@ -30,21 +30,14 @@ export class UserContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(UserActions.loadUsers());
-    this.usersLoading$ = of(false);
-    // this.usersLoading$ = this.store.pipe(
-    //   select(fromUserStore.getUsersLoading),
-    //   takeUntil(this._destroyed$)
-    // );
-    this.users$ = of([
-      { id: 1, name: 'Peter' },
-      { id: 2, name: 'Sam' },
-      { id: 3, name: 'Jo' },
-      { id: 4, name: 'Marie' },
-    ]);
-    // this.users$ =  this.store.pipe(
-    //   select(fromUserStore.getUsers),
-    //   takeUntil(this._destroyed$)
-    // );
+    this.usersLoading$ = this.store.pipe(
+      select(fromUserStore.getUsersLoading),
+      takeUntil(this._destroyed$)
+    );
+    this.users$ =  this.store.pipe(
+      select(fromUserStore.getUsers),
+      takeUntil(this._destroyed$)
+    );
     this.error$ = this.store.pipe(
       select(fromUserStore.getError),
       takeUntil(this._destroyed$)

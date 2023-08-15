@@ -44,7 +44,6 @@ export function createStateMachine<TContext, TEvent extends EventObject>(
     activities,
     services,
     delays,
-    immediate,
     state: rehydratedState,
     events,
     ...interpreterOptions
